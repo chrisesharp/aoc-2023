@@ -22,4 +22,3 @@ def calibrate(line):
 if __name__ == '__main__':
     total = sum(list(map(calibrate, open("input.txt", "r").readlines())))
     print("total", total)
-
