@@ -1,23 +1,23 @@
 import re
 
 def calibrate(line):
-    number = ""
+    number_word = ""
     numbers = []
     for c in line:
         if c.isnumeric():
             numbers.append(c)
             continue
         else:
-            number += c
+            number_word += c
 
-        if result := re.search(r"(zero)|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)+", number):
+        if result := re.search(r"(zero)|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)+", number_word):
             for i, group in enumerate(result.groups()):
                 if group:
                     numbers.append(str(i))
-                    number = number[-1]
+                    number_word = number_word[-1]
                     break
 
-    return int("".join([numbers[0],numbers[-1]]))
+    return int(numbers[0] + numbers[-1])
 
 if __name__ == '__main__':
     total = sum(list(map(calibrate, open("input.txt", "r").readlines())))
