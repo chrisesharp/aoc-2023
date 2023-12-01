@@ -1,6 +1,5 @@
 import re
 
-num_map = [ r"(zero)", r"(one)", r"(two)", r"(three)", r"(four)", r"(five)", r"(six)", r"(seven)", r"(eight)", r"(nine)" ]
 def calibrate(line):
     number = ""
     numbers = []
@@ -11,11 +10,12 @@ def calibrate(line):
         else:
             number += c
 
-        for i, regex in enumerate(num_map):
-            if re.search(regex, number):
-                numbers.append(str(i))
-                number = number[-1]
-                break
+        if result := re.search(r"(zero)|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)+", number):
+            for i, group in enumerate(result.groups()):
+                if group:
+                    numbers.append(str(i))
+                    number = number[-1]
+                    break
 
     return int("".join([numbers[0],numbers[-1]]))
 
