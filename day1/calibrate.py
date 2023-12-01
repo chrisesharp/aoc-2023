@@ -10,7 +10,7 @@ def calibrate(line):
         else:
             number_word += c
 
-        if result := re.search(r"(zero)|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)+", number_word):
+        if result := re.search(r"(zero)|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)", number_word):
             for i, group in enumerate(result.groups()):
                 if group:
                     numbers.append(str(i))
