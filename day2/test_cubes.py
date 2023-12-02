@@ -12,17 +12,15 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 class GameTest(unittest.TestCase):
     def test_samples_1(self):
         games = parse(input_data)
-        actuals = (12, 13, 14)
-        self.assertTrue(is_possible(games[0], actuals))
-        self.assertTrue(is_possible(games[1], actuals))
-        self.assertFalse(is_possible(games[2], actuals))
-        self.assertFalse(is_possible(games[3], actuals))
-        self.assertTrue(is_possible(games[4], actuals))
+        self.assertTrue(is_possible(games[0]))
+        self.assertTrue(is_possible(games[1]))
+        self.assertFalse(is_possible(games[2]))
+        self.assertFalse(is_possible(games[3]))
+        self.assertTrue(is_possible(games[4]))
 
     def test_adder(self):
         games = parse(input_data)
-        actuals = (12, 13, 14)
-        possibles = [i+1 for i, x in enumerate(games) if is_possible(x, actuals)]
+        possibles = [i+1 for i, x in enumerate(games) if is_possible(x)]
         self.assertEqual(8, sum(possibles))
 
     def test_power(self):

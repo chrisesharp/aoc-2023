@@ -1,7 +1,7 @@
 import re
 
-def is_possible(game, actuals) -> bool:
-    (reds, greens, blues)  = actuals
+def is_possible(game) -> bool:
+    (reds, greens, blues)  = (12, 13, 14)
     for iteration in game:
         if int(iteration.get("red", 0)) > reds or int(iteration.get("green", 0)) > greens or int(iteration.get("blue", 0)) > blues:
             return False
@@ -30,8 +30,7 @@ def get_cubes(iteration):
 
 if __name__ == '__main__':
     games = parse(open("input.txt", "r").readlines())
-    actuals = (12, 13, 14)
-    possibles = [i+1 for i, x in enumerate(games) if is_possible(x, actuals)]
+    possibles = [i+1 for i, x in enumerate(games) if is_possible(x)]
     print("Part 1: ", sum(possibles))
     powers = [power(g) for g in games]
     print("Part 2: ", sum(powers))
