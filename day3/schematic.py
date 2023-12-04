@@ -14,26 +14,25 @@ def parse(schematic):
 
 def is_attached(coords, schematic):
     (y, start, end) = coords
-    max_len = len(schematic[0]) - 1
-    max_depth = len(schematic) - 1
-    top = get_slice(start, end, max_len, schematic[y - 1]) if y > 0 else "."*(end - start + 2)
-    middle = get_slice(start, end, max_len, schematic[y])
-    bottom = get_slice(start, end, max_len, schematic[y + 1]) if y < max_depth else "."*(end - start + 2)
-    search_area = [top, middle, bottom]
+    width = len(schematic[0]) - 1
+    depth = len(schematic) - 1
+    search_area = [
+        get_slice(start, end, width, schematic[y - 1]) if y > 0 else "."*(end - start + 2),
+        get_slice(start, end, width, schematic[y]),
+        get_slice(start, end, width, schematic[y + 1]) if y < depth else "."*(end - start + 2)
+    ]
     attached = False
     gear_coord = None
-    for i in range(0, 3):
-        attachments = re.search(r"[^\d\.]", search_area[i])
-        if attachments:
+    for delta, row in enumerate(search_area):
+        if attachments := re.search(r"[^\d\.]", row):
             attached = True
             if attachments.group() == '*':
-                (g_start, _) = attachments.span()
-                gear_coord = (y + i, g_start + start)
+                gear_coord = (y + delta, start + attachments.span()[0])
     return (attached, gear_coord)
 
-def get_slice(start, end, max_len, line):
+def get_slice(start, end, width, line):
     result = line[start - 1:end] if start > 0 else "." + line[start:end]
-    result += line[end] if end < max_len else "."
+    result += line[end] if end < width else "."
     return result
 
 def gear_ratio(parts):
